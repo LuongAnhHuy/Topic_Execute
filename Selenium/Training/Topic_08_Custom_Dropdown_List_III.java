@@ -53,6 +53,7 @@ public class Topic_08_Custom_Dropdown_List_III {
 	// - Vòng lặp for
 	// - Biểu thức điều kiện If
 	// - Do selenium không hỗ trợ scroll nên phải dùng JavascriptExecutor để hỗ trợ
+	
 	@Test
 	public void TC_01_JQuery() {
 		driver.get("https://jqueryui.com/resources/demos/selectmenu/default.html");
@@ -75,6 +76,40 @@ public class Topic_08_Custom_Dropdown_List_III {
 		
 	}
 
+	@Test
+	public void TC_02_ReactJS () {
+		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
+		
+		//Define biến
+		By parentReact = By.xpath("//div[@role='listbox']");
+		By childReact = By.xpath("//div[@role='listbox']//div/span");
+		
+		
+		selectItemInDropdown(parentReact, childReact, "Christian");
+		Assert.assertTrue(isElementDisplayed(By.xpath("//div[@role='alert' and text()='Christian']")));
+		
+		selectItemInDropdown(parentReact, childReact, "Jenny Hess");
+		Assert.assertTrue(isElementDisplayed(By.xpath("//div[@role='alert' and text()='Jenny Hess']")));
+		
+		selectItemInDropdown(parentReact, childReact, "Stevie Feliciano");
+		Assert.assertTrue(isElementDisplayed(By.xpath("//div[@role='alert' and text()='Stevie Feliciano']")));
+	}
+	
+	@Test
+	public void TC_03_VueJS () {
+		
+	}
+	
+	@Test
+	public void TC_04 () {
+		driver.get("https://demos.telerik.com/kendo-ui/dropdownlist/index");		
+		
+		// Chờ cho cái loading icon biến mất trong vòng xx giây
+		boolean itemLoading =  explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[@class='kd-loader']")));
+		Assert.assertTrue(itemLoading);
+		
+	}
+	
 	@AfterMethod
 	public void afterMethod() {
 		driver.quit();
@@ -95,7 +130,8 @@ public class Topic_08_Custom_Dropdown_List_III {
 				
 				for (WebElement item : allItems) {
 					// Nếu getText trong list element đc và so sánh = 5
-					if (item.getText().equals(expectedTextItem)) {
+					// Dùng trim() để xóa cách khoảng trắng/ tab trước text để verify Equals
+					if (item.getText().trim().equals(expectedTextItem)) {
 						// Nếu item được get ở trên = 5 hiển thị thì click
 						if (item.isDisplayed()) { // 3 - Nếu item mình cần chọn nằm trong view (nhìn thấy đc) thì click vào
 							item.click();

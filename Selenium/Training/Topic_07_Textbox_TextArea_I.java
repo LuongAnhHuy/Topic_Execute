@@ -57,10 +57,9 @@ public class Topic_07_Textbox_TextArea_I {
 		loginPage = driver.getCurrentUrl();
 		driver.findElement(By.xpath("//a[text()=\"here\"]")).click();
 		
+		// Xử lí FRAME
 		driver.switchTo().frame(driver.findElement(By.id("google_ads_iframe_/24132379/INTERSTITIAL_DemoGuru99_0")));
 			
-//		WebDriverWait wait = new WebDriverWait(driver, 20);
-//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='dismiss-button']")));
 		
 		driver.findElement(By.xpath("//div[@id='dismiss-button']")).click();
 		
@@ -94,8 +93,10 @@ public class Topic_07_Textbox_TextArea_I {
 		
 		driver.findElement(By.xpath("//input[@value='f']")).click();
 		
+		//
 		JavascriptExecutor  jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].removeAttribute('type')",driver.findElement(By.name("dob")));
+		
 		driver.findElement(By.name("dob")).sendKeys(iDob);
 		driver.findElement(By.name("addr")).sendKeys(iAddress);
 		driver.findElement(By.name("city")).sendKeys(iCity);
