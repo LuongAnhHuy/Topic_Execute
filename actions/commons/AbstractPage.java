@@ -29,6 +29,13 @@ public abstract class AbstractPage {
 	// - Define thư viện Actions
 	private Actions action;
 	
+	// - Define biến long timeout
+	private long longTimeOut = 60;
+	
+	// - Khai báo biến global cho element (của hàm Javascript Execut
+	private WebElement element;
+	
+	
 	
 	// define ra biến url, => tránh việc fix cứng url làm sai ý nghĩa của commons
 	public void openUrl (WebDriver driver, String url) {
@@ -160,6 +167,7 @@ public abstract class AbstractPage {
 	public String getElementAttribute (WebDriver driver, String locator, String attributeValue) {
 		return find(driver, locator).getAttribute(attributeValue);
 	}
+	
 	// Get text
 	public String getTextElement (WebDriver driver, String locator) {
 		return find(driver, locator).getText();
@@ -187,7 +195,7 @@ public abstract class AbstractPage {
 	}
 
 	// isDisplay
-	public boolean isControlDisplay (WebDriver driver, String locator) {
+	public boolean isControlDisplayed (WebDriver driver, String locator) {
 		return find(driver, locator).isDisplayed();
 	}
 	
@@ -203,8 +211,10 @@ public abstract class AbstractPage {
 	
 	// Tương tác với Frame/ iFrame
 	public void switchToFrame (WebDriver driver, String locator) {
+
 		driver.switchTo().frame(find(driver, locator));
 	}
+	
 	// Chuyển về defaultPage để tương tác sau khi switch qua Frame để tương tác với nó
 	public void switchToDefaultPage (WebDriver driver) {
 		driver.switchTo().defaultContent();
@@ -240,4 +250,45 @@ public abstract class AbstractPage {
 			action.sendKeys(find(driver, locator), key).perform();
 	}
 	
+	public void waitToElementPresence(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, longTimeOut);
+		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byXpath(locator)));
 	}
+	
+	public void waitToElementVisible(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, longTimeOut);
+		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byXpath(locator)));
+	}
+	
+	public void waitToElementInVisible(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, longTimeOut);
+		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(byXpath(locator)));
+	}
+	
+	public void waitToElementClickable(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, longTimeOut);
+		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(locator)));
+	}
+	
+	public void clickToElementByJS (WebDriver driver, String locator) {
+		jsExecutor = (JavascriptExecutor) driver;
+		element = find(driver, locator);
+		jsExecutor.executeScript("arguments[0].click();", element);
+	}
+	
+	public void sendkeyToElementByJS (WebDriver driver, String locator, String value) {
+		jsExecutor = (JavascriptExecutor) driver;
+		element = find(driver, locator);
+		jsExecutor.executeScript("arguments[0].setAttribute('value'," + value + "')", element);
+	}
+	
+	public void removeAtributteInDOM(WebDriver driver, String locator, String attributeRemove) {
+		jsExecutor = (JavascriptExecutor) driver;
+		element = find(driver, locator);
+		jsExecutor.executeScript("arguments[0].removeAttribute('"+attributeRemove+"')", element);
+	}
+	
+
+	}
+
+

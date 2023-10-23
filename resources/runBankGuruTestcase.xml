@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite parallel="false" name="Bank Guru">
   <test name="Run on Chrome">
+	  <parameter name="browser" value="chrome" />
     <classes>
-      <class name="com.bankguru.user.Level_01_Repeat_Yourself"/>
-      <class name="com.bankguru.user.Level_02_Abstract_Page"/>
+      <class name="com.bankguru.user.Level_04_Page_Object_Patten"/>
     </classes>
   </test>
 </suite>

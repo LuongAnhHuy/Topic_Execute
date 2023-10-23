@@ -77,29 +77,34 @@ public class Topic_06_Web_Element_Command_II {
 	}
   }
   
-  //By by, String value vì sendkey sẽ send 1 value
+  @AfterMethod
+  public void AfterMethod() {
+	  driver.quit();
+  }
   
+  
+  //By by, String value vì sendkey sẽ send 1 value  
   public void senkeyToElement(By by, String value) {
 	  WebElement element = driver.findElement(by);
 	  element.clear();
 	  element.sendKeys(value);
   }
   
+  
   public void clickToElement(By by) {
 	  WebElement element = driver.findElement(by);
 	  element.click();
-	  
   }
   
-	
-}
+	  
+  
+  
+  }
+  
 
 
 
 
 
-//@AfterMethod
-//  public void Close_Browser() {
-//	driver.quit();
-//  }
+
 
